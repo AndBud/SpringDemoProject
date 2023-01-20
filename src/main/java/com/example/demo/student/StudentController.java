@@ -1,5 +1,6 @@
 package com.example.demo.student;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +26,15 @@ public class StudentController {
     public void registerNewStudent(@RequestBody Student student){
         studentService.addNewStudent(student);
     }
-    @DeleteMapping(path="{studentID}")
+    @DeleteMapping("/api/v1/student/{studentID}")
     public void deleteStudent(@PathVariable("studentId") Long studentId){
         studentService.deleteStudent(studentId);
+    }
+    @PutMapping("/{studentId}")
+    public void updateStudent(
+            @PathVariable("studentId") Long studentId,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email){
+        studentService.updateStudent(studentId,name,email);
     }
 }
